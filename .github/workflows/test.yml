@@ -1,10 +1,10 @@
-name: Build 8350 ice Kernel
+name: Build 8350 lunaa test Kernel
 
 on:
   workflow_dispatch:
 
 env:
-  TZ: Asia/Shanghai
+  TZ: Asia/Kolkata
 
 jobs:
   build:
@@ -46,7 +46,7 @@ jobs:
     - name: Download kernel source
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        git clone --recursive https://github.com/crdroidandroid/android_kernel_oplus_RMX3461.git android-kernel --depth=1
+        git clone --recursive https://github.com/sx75/android_kernel_oneplus_sm8350.git -b staging android-kernel --depth=1
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel/scripts
         sed -i 's/ -dirty//g' setlocalversion
         cd $GITHUB_WORKSPACE/patches
@@ -101,7 +101,7 @@ jobs:
         name: AK3-OPlus-SM8350-${{ env.KSUVER }}-${{ env.BUILD_TIME }}
         path: kernel_workspace/AnyKernel3/*
 
-    - name: Build kernel for ice
+    - name: Build kernel for lunaa
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         export ARCH=arm64
@@ -125,7 +125,7 @@ jobs:
            exit 1
        fi
       
-    - name: Make Anykernel3 for ice
+    - name: Make Anykernel3 for lunaa
       if: env.CHECK_IMAGE == 'true'
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
@@ -133,14 +133,14 @@ jobs:
         cp android-kernel/out/arch/arm64/boot/Image AnyKernel3/
         rm -rf AnyKernel3/.git* AnyKernel3/README.md
     
-    - name: Upload image of ice
+    - name: Upload image of lunaa
       if: env.CHECK_IMAGE == 'true'
       uses: actions/upload-artifact@v4
       with:
         name: Image-ice-${{ env.KSUVER }}
         path: kernel_workspace/android-kernel/out/arch/arm64/boot/Image
 
-    - name: Upload AnyKernel3 of ice
+    - name: Upload AnyKernel3 of lunaa
       if: env.CHECK_IMAGE == 'true'
       uses: actions/upload-artifact@v4
       with:
