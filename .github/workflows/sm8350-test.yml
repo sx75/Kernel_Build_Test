@@ -1,4 +1,4 @@
-name: Build Nameless OPlus SM8350(pjgowtham) Kernel
+name: Build SM8350(SX) Kernel
 
 on:
   workflow_dispatch:
@@ -46,7 +46,7 @@ jobs:
     - name: Download kernel source
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        git clone --recursive https://github.com/sx75/android_kernel_oneplus_sm8350.git -b 14.0-lunaa android-kernel --depth=1
+        git clone --recursive https://github.com/sx75/android_kernel_oneplus_sm8350.git -b stag android-kernel --depth=1
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel/scripts
         sed -i 's/ -dirty//g' setlocalversion
         cd $GITHUB_WORKSPACE/patches
